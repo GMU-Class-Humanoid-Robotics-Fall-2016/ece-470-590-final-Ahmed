@@ -71,7 +71,7 @@ while i < 5:
 	ref.ref[ha.LAP] = -x
 	r.put(ref)
 	i += 1
-	simSleep(0.4)
+simSleep(0.1)
 
 # Shift 
 i = 0
@@ -84,7 +84,7 @@ while i < 14:
 	ref.ref[ha.LAR] = -x
 	r.put(ref)
 	i += 1
-	simSleep(0.4)
+	simSleep(0.1)
 
 
 for i in range(2):
@@ -97,26 +97,27 @@ for i in range(2):
 		ref.ref[ha.RAP] += x
 		r.put(ref)
 		i += 1
-		simSleep(0.4)
+		simSleep(0.1)
 
 	# Step
 	i = 0
-	while i < 6:
+	while i < 7:
 		x = 0.01
 		ref.ref[ha.LHP] -= x
 		ref.ref[ha.LAP] += x
 		ref.ref[ha.RHP] += x
 		ref.ref[ha.RAP] -= x
-		ref.ref[ha.RHP] -= 0.02
-		ref.ref[ha.RKN] += 2*0.02
-		ref.ref[ha.RAP] -= 0.02
+		ref.ref[ha.RHP] -= x
+		ref.ref[ha.RKN] += 2*x
+		ref.ref[ha.RAP] -= x
 		r.put(ref)
 		i += 1
-		simSleep(0.4)
+		simSleep(0.1)
+	simSleep(0.1)
 
 	# Shift
 	i = 0
-	while i < 24:
+	while i < 20:
 		x = 0.01
 		ref.ref[ha.RHR] -= x
 		ref.ref[ha.RAR] += x
@@ -124,7 +125,7 @@ for i in range(2):
 		ref.ref[ha.LAR] += x
 		r.put(ref)
 		i += 1
-		simSleep(0.4)
+		simSleep(0.1)
 
 	# Raise leg
 	i = 0
@@ -135,26 +136,27 @@ for i in range(2):
 		ref.ref[ha.LAP] += x
 		r.put(ref)
 		i += 1
-		simSleep(0.4)
+		simSleep(0.1)
 
 	# Step
 	i = 0
 	while i < 7:
-		x = 0.02
+		x = 0.01
 		ref.ref[ha.LHP] +=  x
 		ref.ref[ha.LAP] -= x
 		ref.ref[ha.RHP] -= x
 		ref.ref[ha.RAP] += x
-		ref.ref[ha.LHP] -= 0.02
-		ref.ref[ha.LKN] += 2*0.02
-		ref.ref[ha.LAP] -= 0.02
+		ref.ref[ha.LHP] -= x
+		ref.ref[ha.LKN] += 2*x
+		ref.ref[ha.LAP] -= x
 		r.put(ref)
 		i += 1
-		simSleep(0.4)
+		simSleep(0.1)
+	simSleep(0.1)
 
 	# Shift
 	i = 0
-	while i < 24:
+	while i < 20:
 		x = 0.1
 		ref.ref[ha.RHR] += x
 		ref.ref[ha.RAR] -= x
@@ -162,7 +164,7 @@ for i in range(2):
 		ref.ref[ha.LAR] -= x
 		r.put(ref)
 		i += 1
-		simSleep(0.4)
+		simSleep(0.1)
 
 # Shift 
 i = 0
@@ -175,7 +177,7 @@ while i < 14:
 	ref.ref[ha.LAR] = x
 	r.put(ref)
 	i += 1
-	simSleep(0.4)
+	simSleep(0.1)
 
 # Bend
 i = 0
@@ -190,7 +192,7 @@ while i < 5:
 	ref.ref[ha.LAP] = x
 	r.put(ref)
 	i += 1
-	simSleep(0.4)
+simSleep(0.1)
 
 # Close the connection to the channels
 r.close()
