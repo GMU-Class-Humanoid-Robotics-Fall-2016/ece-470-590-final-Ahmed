@@ -111,9 +111,10 @@ while i < 12:
 	r.put(ref)
 	i += 1
 	simSleep(0.1)
-
+simSleep(0.1)
 
 for i in range(1):
+	print 'loop #:', i
 	# Shift
 	i = 0
 	while i < 28:
@@ -151,6 +152,7 @@ for i in range(1):
 		r.put(ref)
 		i += 1
 		simSleep(0.1)
+	simSleep(0.1)
 
 	# Shift
 	i = 0
@@ -189,6 +191,19 @@ for i in range(1):
 		r.put(ref)
 		i += 1
 		simSleep(0.1)
+	simSleep(0.1)
+
+# Shift
+i = 0
+while i < 28:
+	x = 0.01
+	ref.ref[ha.RHR] -= x
+	ref.ref[ha.RAR] += x
+	ref.ref[ha.LHR] -= x
+	ref.ref[ha.LAR] += x
+	r.put(ref)
+	i += 1
+	simSleep(0.1)
 
 # Raise leg
 i = 0
@@ -215,16 +230,17 @@ while i < 12:
 	r.put(ref)
 	i += 1
 	simSleep(0.1)
+simSleep(0.1)
 
 # Shift 
 i = 0
 x = 0
 while i < 14:
 	x += 0.01
-	ref.ref[ha.RHR] = -x
-	ref.ref[ha.RAR] = x
-	ref.ref[ha.LHR] = -x
-	ref.ref[ha.LAR] = x
+	ref.ref[ha.RHR] = x
+	ref.ref[ha.RAR] = -x
+	ref.ref[ha.LHR] = x
+	ref.ref[ha.LAR] = -x
 	r.put(ref)
 	i += 1
 	simSleep(0.1)
@@ -232,7 +248,7 @@ while i < 14:
 # Bend
 i = 0
 x = 0
-while i < 6:
+while i < 5:
 	x += 0.1
 	ref.ref[ha.RHP] = x
 	ref.ref[ha.RKN] = -2*x
