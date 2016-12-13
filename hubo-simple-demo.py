@@ -71,7 +71,7 @@ while i < 6:
 	ref.ref[ha.LAP] = -x
 	r.put(ref)
 	i += 1
-simSleep(0.1)
+	simSleep(0.1)
 
 # Shift 
 i = 0
@@ -111,10 +111,9 @@ while i < 12:
 	r.put(ref)
 	i += 1
 	simSleep(0.1)
-simSleep(0.1)
 
 
-for i in range(4):
+for i in range(1):
 	# Shift
 	i = 0
 	while i < 28:
@@ -152,7 +151,6 @@ for i in range(4):
 		r.put(ref)
 		i += 1
 		simSleep(0.1)
-	simSleep(0.1)
 
 	# Shift
 	i = 0
@@ -191,7 +189,6 @@ for i in range(4):
 		r.put(ref)
 		i += 1
 		simSleep(0.1)
-	simSleep(0.1)
 
 # Shift 
 i = 0
@@ -209,7 +206,7 @@ while i < 14:
 # Bend
 i = 0
 x = 0
-while i < 5:
+while i < 6:
 	x += 0.1
 	ref.ref[ha.RHP] = x
 	ref.ref[ha.RKN] = -2*x
@@ -219,7 +216,7 @@ while i < 5:
 	ref.ref[ha.LAP] = x
 	r.put(ref)
 	i += 1
-simSleep(0.1)
+	simSleep(0.1)
 
 # Close the connection to the channels
 r.close()
