@@ -1,0 +1,182 @@
+#!/usr/bin/env python
+# /* -*-  indent-tabs-mode:t; tab-width: 8; c-basic-offset: 8  -*- */
+# /*
+# Copyright (c) 2013, Daniel M. Lofaro
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the author nor the names of its contributors may
+#       be used to endorse or promote products derived from this software
+#       without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# */
+
+import hubo_ach as ha
+import ach
+import sys
+import time
+from ctypes import *
+import math
+
+def simSleep(T):
+	[statuss, framesizes] = s.get(state, wait=False, last=False)
+	tick = state.time
+	while(True):
+		[statuss, framesizes] = s.get(state, wait=True, last=False)
+		if((state.time - tick) > T):
+			break
+
+# Open Hubo-Ach feed-forward and feed-back (reference and state) channels
+s = ach.Channel(ha.HUBO_CHAN_STATE_NAME)
+r = ach.Channel(ha.HUBO_CHAN_REF_NAME)
+#s.flush()
+#r.flush()
+
+# feed-forward will now be refered to as "state"
+state = ha.HUBO_STATE()
+
+# feed-back will now be refered to as "ref"
+ref = ha.HUBO_REF()
+
+# Get the current feed-forward (state) 
+[statuss, framesizes] = s.get(state, wait=False, last=False)
+
+# Walking of HUBO
+# Bend
+i = 0
+x = 0
+while i < 5:
+	x += 0.1
+	ref.ref[ha.RHP] = -x
+	ref.ref[ha.RKN] = 2*x
+	ref.ref[ha.RAP] = -x
+	ref.ref[ha.LHP] = -x
+	ref.ref[ha.LKN] = 2*x
+	ref.ref[ha.LAP] = -x
+	r.put(ref)
+	i += 1
+	simSleep(0.4)
+
+# Shift 
+i = 0
+x = 0
+while i < 14:
+	x += 0.01
+	ref.ref[ha.RHR] = x
+	ref.ref[ha.RAR] = -x
+	ref.ref[ha.LHR] = x
+	ref.ref[ha.LAR] = -x
+	r.put(ref)
+	i += 1
+	simSleep(0.4)
+
+
+for i in range(2):
+	# Raise leg
+	i = 0
+	while i < 3:
+		x = 0.04
+		ref.ref[ha.RHP] += x
+		ref.ref[ha.RKN] -= 2*x
+		ref.ref[ha.RAP] += x
+		r.put(ref)
+		i += 1
+		simSleep(0.4)
+
+	# Step
+	i = 0
+	while i < 6:
+		x = 0.01
+		ref.ref[ha.LHP] -= x
+		ref.ref[ha.LAP] += x
+		ref.ref[ha.RHP] += x
+		ref.ref[ha.RAP] -= x
+		ref.ref[ha.RHP] -= 0.02
+		ref.ref[ha.RKN] += 2*0.02
+		ref.ref[ha.RAP] -= 0.02
+		r.put(ref)
+		i += 1
+		simSleep(0.4)
+
+	# Shift
+	i = 0
+	while i < 24:
+		x = 0.01
+		ref.ref[ha.RHR] -= x
+		ref.ref[ha.RAR] += x
+		ref.ref[ha.LHR] -= x
+		ref.ref[ha.LAR] += x
+		r.put(ref)
+		i += 1
+		simSleep(0.4)
+
+	# Raise leg
+	i = 0
+	while i < 3:
+		x = 0.04
+		ref.ref[ha.LHP] += x
+		ref.ref[ha.LKN] -= 2*x
+		ref.ref[ha.LAP] += x
+		r.put(ref)
+		i += 1
+		simSleep(0.4)
+
+	# Step
+	i = 0
+	while i < 7:
+		x = 0.02
+		ref.ref[ha.LHP] +=  x
+		ref.ref[ha.LAP] -= x
+		ref.ref[ha.RHP] -= x
+		ref.ref[ha.RAP] += x
+		ref.ref[ha.LHP] -= 0.02
+		ref.ref[ha.LKN] += 2*0.02
+		ref.ref[ha.LAP] -= 0.02
+		r.put(ref)
+		i += 1
+		simSleep(0.4)
+
+	# Shift
+	i = 0
+	while i < 24:
+		x = 0.1
+		ref.ref[ha.RHR] += x
+		ref.ref[ha.RAR] -= x
+		ref.ref[ha.LHR] += x
+		ref.ref[ha.LAR] -= x
+		r.put(ref)
+		i += 1
+		simSleep(0.4)
+
+
+positionBend = [0.2, 0.1, 0]
+for x in positionBend:
+	ref.ref[ha.RHP] = -x
+	ref.ref[ha.RKN] = 2*x
+	ref.ref[ha.RAP] = -x
+	ref.ref[ha.LHP] = -x
+	ref.ref[ha.LKN] = 2*x
+	ref.ref[ha.LAP] = -x
+	r.put(ref)
+	simSleep(0.4)
+
+# Close the connection to the channels
+r.close()
+s.close()
+
