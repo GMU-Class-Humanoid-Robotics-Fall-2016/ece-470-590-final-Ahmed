@@ -190,6 +190,32 @@ for i in range(1):
 		i += 1
 		simSleep(0.1)
 
+# Raise leg
+i = 0
+while i < 12:
+	x = 0.01
+	ref.ref[ha.LHP] += x
+	ref.ref[ha.LKN] -= 2*x
+	ref.ref[ha.LAP] += x
+	r.put(ref)
+	i += 1
+	simSleep(0.1)
+
+# Step
+i = 0
+while i < 12:
+	x = 0.01
+	ref.ref[ha.LHP] +=  x
+	ref.ref[ha.LAP] -= x
+	ref.ref[ha.RHP] -= x
+	ref.ref[ha.RAP] += x
+	ref.ref[ha.LHP] -= x
+	ref.ref[ha.LKN] += 2*x
+	ref.ref[ha.LAP] -= x
+	r.put(ref)
+	i += 1
+	simSleep(0.1)
+
 # Shift 
 i = 0
 x = 0
