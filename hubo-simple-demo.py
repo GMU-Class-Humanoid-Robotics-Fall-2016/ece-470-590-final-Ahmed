@@ -164,16 +164,32 @@ for i in range(2):
 		i += 1
 		simSleep(0.4)
 
-
-positionBend = [0.2, 0.1, 0]
-for x in positionBend:
-	ref.ref[ha.RHP] = -x
-	ref.ref[ha.RKN] = 2*x
-	ref.ref[ha.RAP] = -x
-	ref.ref[ha.LHP] = -x
-	ref.ref[ha.LKN] = 2*x
-	ref.ref[ha.LAP] = -x
+# Shift 
+i = 0
+x = 0
+while i < 14:
+	x += 0.01
+	ref.ref[ha.RHR] = -x
+	ref.ref[ha.RAR] = x
+	ref.ref[ha.LHR] = -x
+	ref.ref[ha.LAR] = x
 	r.put(ref)
+	i += 1
+	simSleep(0.4)
+
+# Bend
+i = 0
+x = 0
+while i < 5:
+	x += 0.1
+	ref.ref[ha.RHP] = x
+	ref.ref[ha.RKN] = -2*x
+	ref.ref[ha.RAP] = x
+	ref.ref[ha.LHP] = x
+	ref.ref[ha.LKN] = -2*x
+	ref.ref[ha.LAP] = x
+	r.put(ref)
+	i += 1
 	simSleep(0.4)
 
 # Close the connection to the channels
