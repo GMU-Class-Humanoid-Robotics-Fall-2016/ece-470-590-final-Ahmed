@@ -112,7 +112,7 @@ while i < 12:
 	simSleep(0.1)
 simSleep(0.1)
 
-for i in range(5):
+for i in range(4):
 	print 'loop #:', i
 	# Shift
 	i = 0
