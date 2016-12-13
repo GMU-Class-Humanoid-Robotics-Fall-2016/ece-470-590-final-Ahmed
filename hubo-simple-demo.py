@@ -37,10 +37,8 @@ import math
 def simSleep(T):
 	[statuss, framesizes] = s.get(state, wait=False, last=False)
 	tick = state.time
-	while(True):
+	while((state.time - tick) < T):
 		[statuss, framesizes] = s.get(state, wait=True, last=False)
-		if((state.time - tick) > T):
-			break
 
 # Open Hubo-Ach feed-forward and feed-back (reference and state) channels
 s = ach.Channel(ha.HUBO_CHAN_STATE_NAME)
@@ -113,7 +111,7 @@ while i < 12:
 	simSleep(0.1)
 simSleep(0.1)
 
-for i in range(1):
+for i in range(10):
 	print 'loop #:', i
 	# Shift
 	i = 0
@@ -246,19 +244,15 @@ while i < 14:
 	simSleep(0.1)
 
 # Bend
-i = 0
 x = 0
-while i < 5:
-	x += 0.1
-	ref.ref[ha.RHP] = x
-	ref.ref[ha.RKN] = -2*x
-	ref.ref[ha.RAP] = x
-	ref.ref[ha.LHP] = x
-	ref.ref[ha.LKN] = -2*x
-	ref.ref[ha.LAP] = x
-	r.put(ref)
-	i += 1
-	simSleep(0.1)
+ref.ref[ha.RHP] = x
+ref.ref[ha.RKN] = x
+ref.ref[ha.RAP] = x
+ref.ref[ha.LHP] = x
+ref.ref[ha.LKN] = x
+ref.ref[ha.LAP] = x
+r.put(ref)
+simSleep(0.1)
 
 # Close the connection to the channels
 r.close()
