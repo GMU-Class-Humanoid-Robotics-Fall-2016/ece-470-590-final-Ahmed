@@ -61,7 +61,7 @@ ref = ha.HUBO_REF()
 # Bend
 i = 0
 x = 0
-while i < 5:
+while i < 6:
 	x += 0.1
 	ref.ref[ha.RHP] = -x
 	ref.ref[ha.RKN] = 2*x
@@ -86,38 +86,38 @@ while i < 14:
 	i += 1
 	simSleep(0.1)
 
-
-for i in range(2):
-	# Raise leg
-	i = 0
-	while i < 3:
-		x = 0.04
-		ref.ref[ha.RHP] += x
-		ref.ref[ha.RKN] -= 2*x
-		ref.ref[ha.RAP] += x
-		r.put(ref)
-		i += 1
-		simSleep(0.1)
-
-	# Step
-	i = 0
-	while i < 7:
-		x = 0.01
-		ref.ref[ha.LHP] -= x
-		ref.ref[ha.LAP] += x
-		ref.ref[ha.RHP] += x
-		ref.ref[ha.RAP] -= x
-		ref.ref[ha.RHP] -= x
-		ref.ref[ha.RKN] += 2*x
-		ref.ref[ha.RAP] -= x
-		r.put(ref)
-		i += 1
-		simSleep(0.1)
+# Raise leg
+i = 0
+while i < 12:
+	x = 0.01
+	ref.ref[ha.RHP] += x
+	ref.ref[ha.RKN] -= 2*x
+	ref.ref[ha.RAP] += x
+	r.put(ref)
+	i += 1
 	simSleep(0.1)
 
+# Step
+i = 0
+while i < 12:
+	x = 0.01
+	ref.ref[ha.LHP] -= x
+	ref.ref[ha.LAP] += x
+	ref.ref[ha.RHP] += x
+	ref.ref[ha.RAP] -= x
+	ref.ref[ha.RHP] -= x
+	ref.ref[ha.RKN] += 2*x
+	ref.ref[ha.RAP] -= x
+	r.put(ref)
+	i += 1
+	simSleep(0.1)
+simSleep(0.1)
+
+
+for i in range(4):
 	# Shift
 	i = 0
-	while i < 20:
+	while i < 28:
 		x = 0.01
 		ref.ref[ha.RHR] -= x
 		ref.ref[ha.RAR] += x
@@ -129,8 +129,8 @@ for i in range(2):
 
 	# Raise leg
 	i = 0
-	while i < 3:
-		x = 0.04
+	while i < 24:
+		x = 0.01
 		ref.ref[ha.LHP] += x
 		ref.ref[ha.LKN] -= 2*x
 		ref.ref[ha.LAP] += x
@@ -140,7 +140,7 @@ for i in range(2):
 
 	# Step
 	i = 0
-	while i < 7:
+	while i < 24:
 		x = 0.01
 		ref.ref[ha.LHP] +=  x
 		ref.ref[ha.LAP] -= x
@@ -156,8 +156,8 @@ for i in range(2):
 
 	# Shift
 	i = 0
-	while i < 20:
-		x = 0.1
+	while i < 28:
+		x = 0.01
 		ref.ref[ha.RHR] += x
 		ref.ref[ha.RAR] -= x
 		ref.ref[ha.LHR] += x
@@ -165,6 +165,33 @@ for i in range(2):
 		r.put(ref)
 		i += 1
 		simSleep(0.1)
+
+	# Raise leg
+	i = 0
+	while i < 24:
+		x = 0.01
+		ref.ref[ha.RHP] += x
+		ref.ref[ha.RKN] -= 2*x
+		ref.ref[ha.RAP] += x
+		r.put(ref)
+		i += 1
+		simSleep(0.1)
+
+	# Step
+	i = 0
+	while i < 24:
+		x = 0.01
+		ref.ref[ha.LHP] -= x
+		ref.ref[ha.LAP] += x
+		ref.ref[ha.RHP] += x
+		ref.ref[ha.RAP] -= x
+		ref.ref[ha.RHP] -= x
+		ref.ref[ha.RKN] += 2*x
+		ref.ref[ha.RAP] -= x
+		r.put(ref)
+		i += 1
+		simSleep(0.1)
+	simSleep(0.1)
 
 # Shift 
 i = 0
